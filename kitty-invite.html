@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="You're invited to the kitty at H-702 — Thursday 20 August, 3:30 PM.">
+<meta name="theme-color" content="#240A2C">
+<title>Kitty at H-702 — 20 August</title>
+
+<style>
+  html,body{ margin:0; padding:0; }
+  :root{
+    /* ── palette: a committed single visual world (plum night + marigold) ── */
+    --ink:      #170518;
+    --ground:   #240A2C;
+    --plum:     #3A1043;
+    --plum-hi:  #4C1858;
+    --line:     #5E2A6B;
+    --gulabi:   #FF4B8C;
+    --marigold: #FFB020;
+    --saffron:  #FF7A18;
+    --peacock:  #24C6B0;
+    --ivory:    #FFF4E6;
+    --muted:    #C9A6D4;
+
+    --display: "Bodoni MT","Bodoni 72",Didot,"Didot LT STD","Playfair Display",Georgia,"Times New Roman",serif;
+    --sans:    Futura,"Century Gothic","Avenir Next",Avenir,"Trebuchet MS","Segoe UI",sans-serif;
+
+    --shell: min(1120px, 92vw);
+    --r: 4px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ivory);
+    font-family:var(--sans);
+    font-size:clamp(15px,1.05vw + 12px,17.5px);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body.is-locked{ overflow:hidden; height:100vh; }
+
+  ::selection{ background:var(--gulabi); color:var(--ink); }
+
+  :focus-visible{
+    outline:2px solid var(--marigold);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  /* ─────────────── shared type ─────────────── */
+  .eyebrow{
+    font-size:.68rem;
+    letter-spacing:.34em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0;
+  }
+  .display{
+    font-family:var(--display);
+    font-weight:400;
+    line-height:.92;
+    letter-spacing:-.01em;
+    text-wrap:balance;
+    margin:0;
+  }
+  .prose{ max-width:60ch; color:var(--muted); }
+  .num{ font-variant-numeric:tabular-nums lining-nums; }
+
+  /* ─────────────── ambient canvas ─────────────── */
+  #petals{
+    position:fixed; inset:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    z-index:2;
+  }
+
+  /* ─────────────── the sealed envelope ─────────────── */
+  .curtain{
+    position:fixed; inset:0;
+    z-index:60;
+    display:grid;
+    place-items:center;
+    gap:0;
+    padding:24px;
+    background:
+      radial-gradient(120% 90% at 50% 0%, #46135220 0%, transparent 60%),
+      radial-gradient(90% 70% at 50% 100%, #FF7A1814 0%, transparent 65%),
+      var(--ink);
+    transition:opacity .7s ease .55s, visibility 0s linear 1.25s;
+  }
+  .curtain.is-open{ opacity:0; visibility:hidden; pointer-events:none; }
+
+  .env{
+    position:relative;
+    width:min(460px,84vw);
+    aspect-ratio:1.5/1;
+    perspective:1400px;
+  }
+  .env-body{
+    position:absolute; inset:0;
+    background:linear-gradient(160deg,var(--plum-hi),var(--plum) 55%,#2C0C34);
+    border:1px solid var(--line);
+    box-shadow:0 40px 90px -30px #000, inset 0 1px 0 #ffffff14;
+  }
+  .env-body::before,.env-body::after{
+    content:""; position:absolute; bottom:0; width:52%; height:100%;
+    background:linear-gradient(150deg,#3E124A,#2A0B32);
+    border-top:1px solid #ffffff10;
+  }
+  .env-body::before{ left:0;  clip-path:polygon(0 0,0 100%,100% 100%); }
+  .env-body::after { right:0; clip-path:polygon(100% 0,100% 100%,0 100%); }
+
+  .env-letter{
+    position:absolute; left:7%; right:7%; top:8%;
+    height:84%;
+    background:linear-gradient(180deg,#FFF7EC,#F5E3CF);
+    color:#3A1043;
+    display:grid; place-content:center; text-align:center; gap:6px;
+    padding:18px;
+    transform:translateY(0);
+    transition:transform 1s cubic-bezier(.2,.8,.2,1) .25s;
+    box-shadow:0 10px 30px -12px #000;
+  }
+  .env-letter .display{ font-size:clamp(1.4rem,4vw,2.1rem); }
+  .env-letter .eyebrow{ color:#8A5A93; }
+  .env.is-open .env-letter{ transform:translateY(-46%); }
+
+  .env-flap{
+    position:absolute; left:0; right:0; top:0; height:62%;
+    background:linear-gradient(175deg,#541B61,#3B1145);
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top center;
+    transform:rotateX(0deg);
+    transition:transform .9s cubic-bezier(.6,-.28,.4,1.3);
+    z-index:3;
+    border-bottom:1px solid #ffffff12;
+  }
+  .env.is-open .env-flap{ transform:rotateX(-178deg); }
+
+  .env-front{
+    position:absolute; inset:0;
+    background:linear-gradient(160deg,#3E124A,#2A0B32);
+    clip-path:polygon(0 22%,50% 74%,100% 22%,100% 100%,0 100%);
+    z-index:4;
+    border-top:1px solid #ffffff0d;
+  }
+
+  .seal{
+    position:absolute; left:50%; top:62%;
+    transform:translate(-50%,-50%);
+    z-index:6;
+    width:104px; height:104px;
+    border:0; padding:0; background:none;
+    cursor:pointer;
+    transition:transform .5s cubic-bezier(.2,.8,.2,1), opacity .4s ease;
+    animation:pulse 2.8s ease-in-out infinite;
+  }
+  .seal:hover{ transform:translate(-50%,-50%) scale(1.06) rotate(-4deg); }
+  .env.is-open .seal{ opacity:0; transform:translate(-50%,-50%) scale(.4) rotate(28deg); animation:none; }
+  @keyframes pulse{
+    0%,100%{ filter:drop-shadow(0 0 0 #FF4B8C00); }
+    50%    { filter:drop-shadow(0 0 22px #FF4B8C66); }
+  }
+  .seal-k{
+    font-family:var(--display);
+    font-size:44px;
+    fill:#FFE9C9;
+  }
+
+  .curtain-hint{
+    position:absolute;
+    left:50%; bottom:8vh; transform:translateX(-50%);
+    margin:0;
+    font-size:.68rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ─────────────── hero ─────────────── */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:grid;
+    place-items:center;
+    padding:14vh 4vw 10vh;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .rangoli{
+    position:absolute;
+    left:50%; top:46%;
+    width:min(128vh,150vw); height:min(128vh,150vw);
+    transform:translate(-50%,-50%);
+    z-index:-1;
+    opacity:.5;
+    animation:spin 190s linear infinite;
+  }
+  @keyframes spin{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0; z-index:-1;
+    background:radial-gradient(58% 52% at 50% 46%, transparent 0%, var(--ground) 78%);
+  }
+
+  .hero-inner{ text-align:center; display:grid; gap:clamp(18px,3vh,32px); justify-items:center; }
+  .hero h1{
+    font-size:clamp(3.4rem,15vw,9.5rem);
+    font-family:var(--display);
+    line-height:.84;
+    letter-spacing:-.02em;
+    margin:0;
+  }
+  .hero h1 .ital{ font-style:italic; color:var(--marigold); }
+  .hero-sub{
+    font-size:clamp(.72rem,1.4vw,.9rem);
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0;
+  }
+  .rule{
+    width:min(340px,60vw); height:1px;
+    background:linear-gradient(90deg,transparent,var(--line) 18%,var(--gulabi),var(--line) 82%,transparent);
+  }
+  .stamp{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:9px 16px;
+    border:1px solid var(--line);
+    background:#ffffff08;
+    font-size:.72rem; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--ivory);
+  }
+  .stamp b{ color:var(--marigold); font-weight:400; }
+  .dot{ width:6px; height:6px; border-radius:50%; background:var(--peacock); }
+
+  .scroll-cue{
+    position:absolute; bottom:26px; left:50%; transform:translateX(-50%);
+    display:grid; justify-items:center; gap:8px;
+    font-size:.6rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted);
+  }
+  .scroll-cue span{ width:1px; height:38px; background:linear-gradient(var(--gulabi),transparent); }
+
+  /* ─────────────── sections ─────────────── */
+  .shell{ width:var(--shell); margin-inline:auto; }
+  .band{ padding:clamp(72px,11vh,132px) 0; position:relative; }
+  .band-alt{ background:linear-gradient(180deg,var(--ground),#1F0826 45%,var(--ground)); }
+
+  .band-head{ display:grid; gap:14px; margin-bottom:clamp(34px,5vh,58px); }
+  .band-head h2{ font-size:clamp(2rem,5.4vw,3.4rem); }
+
+  /* ─────────────── tambola ticket ─────────────── */
+  .ticket-wrap{
+    display:grid;
+    gap:clamp(28px,4vw,48px);
+    grid-template-columns:1fr;
+    align-items:start;
+  }
+  @media (min-width:920px){
+    .ticket-wrap{ grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); }
+  }
+
+  .ticket{
+    background:linear-gradient(168deg,#FFF7EC,#F3E1CC);
+    padding:clamp(14px,2.4vw,22px);
+    box-shadow:0 34px 70px -34px #000, 0 0 0 1px #00000022;
+    position:relative;
+  }
+  .ticket::before{
+    content:"TAMBOLA · HOUSIE · H-702";
+    position:absolute; top:-11px; left:clamp(14px,2.4vw,22px);
+    background:var(--gulabi); color:var(--ink);
+    font-size:.58rem; letter-spacing:.24em; padding:4px 10px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(9,1fr);
+    gap:clamp(3px,.5vw,6px);
+    margin-top:14px;
+  }
+  .cell{
+    aspect-ratio:1/1;
+    display:grid; place-items:center;
+    background:#EADCC6;
+    border:0;
+    font-family:var(--sans);
+    font-variant-numeric:tabular-nums;
+    font-size:clamp(.7rem,1.9vw,1.15rem);
+    color:#B9A489;
+    padding:0;
+  }
+  .cell.blank{ background:#E2D2B9; }
+  .cell.key{
+    background:#FFFFFF;
+    color:#3A1043;
+    cursor:pointer;
+    position:relative;
+    box-shadow:inset 0 0 0 2px var(--gulabi);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .cell.key::after{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 50% 50%, var(--gulabi) 0 62%, transparent 63%);
+    opacity:0;
+    transform:scale(.2);
+    transition:transform .4s cubic-bezier(.2,1.4,.4,1), opacity .25s ease;
+  }
+  .cell.key:hover{ transform:translateY(-2px); box-shadow:inset 0 0 0 2px var(--saffron); }
+  .cell.key span{ position:relative; z-index:2; transition:color .25s ease; }
+  .cell.key[aria-pressed="true"]::after{ opacity:1; transform:scale(1); }
+  .cell.key[aria-pressed="true"] span{ color:#FFF4E6; }
+  .cell.key[aria-pressed="true"]{ box-shadow:inset 0 0 0 2px #00000018; }
+
+  .ticket-foot{
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+    gap:12px; margin-top:16px;
+    color:#7A5C86; font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+  }
+  .link-btn{
+    background:none; border:0; padding:0;
+    font:inherit; color:#3A1043;
+    text-decoration:underline; text-underline-offset:4px;
+    cursor:pointer;
+  }
+  .link-btn:hover{ color:var(--gulabi); }
+
+  .progress{
+    height:3px; background:#00000018; margin-top:14px; overflow:hidden;
+  }
+  .progress i{
+    display:block; height:100%; width:0%;
+    background:linear-gradient(90deg,var(--gulabi),var(--marigold));
+    transition:width .5s cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* revealed detail cards */
+  .reveals{ display:grid; gap:10px; align-content:start; }
+  .reveal{
+    display:grid;
+    grid-template-columns:58px 1fr;
+    gap:16px; align-items:center;
+    padding:16px 18px;
+    background:#ffffff07;
+    border:1px solid var(--line);
+    border-left:3px solid var(--marigold);
+    opacity:0; transform:translateY(10px);
+    transition:opacity .45s ease, transform .45s cubic-bezier(.2,.8,.2,1);
+  }
+  .reveal.on{ opacity:1; transform:none; }
+  .reveal .rn{
+    font-family:var(--display);
+    font-size:2rem; line-height:1;
+    color:var(--gulabi);
+    text-align:center;
+    font-variant-numeric:tabular-nums;
+  }
+  .reveal .rl{ font-size:.6rem; letter-spacing:.26em; text-transform:uppercase; color:var(--muted); display:block; }
+  .reveal .rv{ font-size:1.02rem; color:var(--ivory); }
+  .reveal-placeholder{
+    padding:20px; border:1px dashed var(--line); color:var(--muted);
+    font-size:.9rem; text-align:center;
+  }
+
+  .fullhouse{
+    margin-top:4px;
+    padding:20px;
+    text-align:center;
+    background:linear-gradient(120deg,var(--gulabi),var(--saffron));
+    color:#2A0B32;
+    display:none;
+  }
+  .fullhouse.on{ display:block; animation:pop .6s cubic-bezier(.2,1.5,.4,1); }
+  .fullhouse strong{ font-family:var(--display); font-size:1.7rem; display:block; letter-spacing:.02em; }
+  @keyframes pop{ from{ transform:scale(.85); opacity:0; } }
+
+  /* ─────────────── grace-window clock ─────────────── */
+  .clock-wrap{
+    display:grid; gap:clamp(28px,4vw,52px);
+    grid-template-columns:1fr;
+    align-items:center;
+  }
+  @media (min-width:860px){ .clock-wrap{ grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); } }
+  .clock{ width:min(360px,78vw); margin-inline:auto; display:block; }
+  .clock .face{ fill:var(--plum); stroke:var(--line); stroke-width:1.5; }
+  .clock .tick{ stroke:var(--muted); stroke-width:1.5; opacity:.5; }
+  .clock .tick-h{ stroke:var(--ivory); stroke-width:3; opacity:.85; }
+  .clock .hand{ stroke:var(--ivory); stroke-linecap:round; }
+  .clock .grace{
+    fill:none; stroke:var(--gulabi); stroke-width:12; stroke-linecap:round; opacity:.9;
+    stroke-dasharray:var(--arc-len,300) 999;
+    stroke-dashoffset:var(--arc-len,300);
+    transition:stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1);
+  }
+  .clock.run .grace{ stroke-dashoffset:0; }
+  .clock .hh{ transform-origin:120px 120px; transform:rotate(105deg); }
+  .clock .mh{ transform-origin:120px 120px; transform:rotate(180deg); transition:transform 1.6s cubic-bezier(.4,0,.2,1); }
+  .clock.run .mh{ transform:rotate(270deg); }
+  .clock .stamp-t{ font-family:var(--display); font-size:15px; fill:var(--muted); letter-spacing:2px; }
+
+  .facts{ display:grid; gap:0; border-top:1px solid var(--line); }
+  .fact{
+    display:grid; grid-template-columns:auto 1fr; gap:8px 22px;
+    align-items:baseline;
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+  }
+  @media (max-width:520px){ .fact{ grid-template-columns:1fr; } }
+  .fact dt{ font-size:.62rem; letter-spacing:.26em; text-transform:uppercase; color:var(--muted); }
+  .fact dd{ margin:0; font-size:clamp(1.05rem,2.4vw,1.35rem); color:var(--ivory); }
+  .fact dd em{ font-family:var(--display); font-style:italic; color:var(--marigold); }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:14px 22px;
+    background:var(--gulabi); color:#26082D;
+    border:0; cursor:pointer;
+    font-family:var(--sans); font-size:.74rem;
+    letter-spacing:.22em; text-transform:uppercase;
+    text-decoration:none;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .btn:hover{ background:var(--marigold); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; color:var(--ivory); box-shadow:inset 0 0 0 1px var(--line); }
+  .btn-ghost:hover{ background:#ffffff0d; color:var(--ivory); }
+
+  /* ─────────────── venue door ─────────────── */
+  .door-wrap{
+    display:grid; gap:clamp(28px,4vw,56px);
+    grid-template-columns:1fr; align-items:center;
+  }
+  @media (min-width:860px){ .door-wrap{ grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); } }
+  .door{ width:min(330px,72vw); margin-inline:auto; display:block; cursor:pointer; }
+  .door .leaf{ transform-origin:22px 137px; transition:transform .9s cubic-bezier(.2,.8,.2,1); }
+  .door.open .leaf{ transform:scaleX(.24); }
+  .door .glow{ opacity:0; transition:opacity .9s ease .2s; }
+  .door.open .glow{ opacity:1; }
+  .door-hint{ text-align:center; font-size:.6rem; letter-spacing:.28em; text-transform:uppercase; color:var(--muted); margin-top:14px; }
+
+  .huge-addr{
+    font-family:var(--display);
+    font-size:clamp(4rem,17vw,10rem);
+    line-height:.82;
+    letter-spacing:-.03em;
+    margin:0 0 10px;
+    background:linear-gradient(100deg,var(--ivory),var(--marigold) 55%,var(--gulabi));
+    -webkit-background-clip:text; background-clip:text;
+    color:transparent;
+  }
+
+  /* ─────────────── countdown ─────────────── */
+  .count{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:clamp(8px,1.6vw,18px);
+    margin:0 0 clamp(28px,4vh,44px);
+    padding:0; list-style:none;
+  }
+  .count li{
+    padding:clamp(16px,2.6vw,28px) 6px;
+    text-align:center;
+    background:#ffffff07;
+    border:1px solid var(--line);
+  }
+  .count b{
+    display:block;
+    font-family:var(--display); font-weight:400;
+    font-size:clamp(1.9rem,7vw,3.6rem);
+    line-height:1; color:var(--ivory);
+    font-variant-numeric:tabular-nums;
+  }
+  .count small{ font-size:.56rem; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); }
+
+  .cta-row{ display:flex; flex-wrap:wrap; gap:12px; }
+
+  /* ─────────────── footer ─────────────── */
+  .foot{
+    border-top:1px solid var(--line);
+    padding:44px 0 60px;
+    display:flex; flex-wrap:wrap; gap:14px;
+    align-items:center; justify-content:space-between;
+    color:var(--muted); font-size:.66rem; letter-spacing:.2em; text-transform:uppercase;
+  }
+
+  /* ─────────────── scroll reveal ─────────────── */
+  .rise{ opacity:0; transform:translateY(22px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+  .rise.in{ opacity:1; transform:none; }
+
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+    .rise{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ SEALED ENVELOPE ══════════════ -->
+<div class="curtain" id="curtain">
+  <div class="env" id="env">
+    <div class="env-body"></div>
+
+    <div class="env-letter">
+      <p class="eyebrow">H-702 requests the pleasure</p>
+      <p class="display">Kitty<br>Party</p>
+      <p class="eyebrow">Thursday · 20 August</p>
+    </div>
+
+    <div class="env-flap"></div>
+    <div class="env-front"></div>
+
+    <button class="seal" id="seal" aria-label="Open the invitation">
+      <svg viewBox="0 0 120 120" width="104" height="104" aria-hidden="true">
+        <defs>
+          <filter id="wax">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="7" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <radialGradient id="waxg" cx="38%" cy="32%">
+            <stop offset="0%"  stop-color="#FF6EA5"/>
+            <stop offset="55%" stop-color="#E0246B"/>
+            <stop offset="100%" stop-color="#8E0F42"/>
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="46" fill="url(#waxg)" filter="url(#wax)"/>
+        <circle cx="60" cy="60" r="36" fill="none" stroke="#FFD9A8" stroke-width="1" opacity=".55"/>
+        <text class="seal-k" x="60" y="76" text-anchor="middle">K</text>
+      </svg>
+    </button>
+  </div>
+  <p class="curtain-hint">Break the seal</p>
+</div>
+
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<!-- ══════════════ HERO ══════════════ -->
+<header class="hero">
+  <svg class="rangoli" id="rangoli" viewBox="0 0 800 800" aria-hidden="true"></svg>
+
+  <div class="hero-inner">
+    <p class="hero-sub">You are warmly invited</p>
+    <h1 class="display">The <span class="ital">Kitty</span><br>at H-702</h1>
+    <div class="rule"></div>
+    <p class="stamp">
+      <span class="dot"></span>
+      Thursday <b>20 August</b> · <b>3:30 PM</b>
+    </p>
+  </div>
+
+  <p class="scroll-cue">Scroll <span></span></p>
+</header>
+
+<!-- ══════════════ TAMBOLA TICKET ══════════════ -->
+<section class="band" id="details">
+  <div class="shell">
+    <div class="band-head rise">
+      <p class="eyebrow">The details, in the only format that matters</p>
+      <h2 class="display">Daub the ticket.<br>Six numbers, six answers.</h2>
+      <p class="prose">Every number below is holding one piece of the plan. Tap one to mark it — mark all six and you have a full house, and everything you need to know.</p>
+    </div>
+
+    <div class="ticket-wrap rise">
+      <div>
+        <div class="ticket">
+          <div class="grid" id="grid" role="group" aria-label="Tambola ticket — tap the highlighted numbers"></div>
+          <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+          <div class="ticket-foot">
+            <span id="score" class="num">0 of 6 daubed</span>
+            <button class="link-btn" id="revealAll" type="button">Just tell me everything</button>
+          </div>
+        </div>
+        <div class="fullhouse" id="fullhouse" role="status">
+          <strong>Full House!</strong>
+          You have every detail. Now the only thing left to bring is yourself.
+        </div>
+      </div>
+
+      <div class="reveals" id="reveals">
+        <p class="reveal-placeholder" id="placeholder">Nothing daubed yet — the ticket is still a secret.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PUNCTUALITY ══════════════ -->
+<section class="band band-alt">
+  <div class="shell">
+    <div class="clock-wrap">
+      <svg class="clock rise" id="clock" viewBox="0 0 240 240" role="img" aria-label="Clock showing doors open at 3:30 and the fifteen minute grace window until 3:45">
+        <circle class="face" cx="120" cy="120" r="106"/>
+        <g id="ticks"></g>
+        <!-- grace arc: 3:30 → 3:45 along the minute track -->
+        <path class="grace" id="graceArc" d="M 120 200 A 80 80 0 0 1 40 120"/>
+        <g class="hh"><line class="hand" x1="120" y1="120" x2="120" y2="68" stroke-width="7"/></g>
+        <g class="mh"><line class="hand" x1="120" y1="120" x2="120" y2="46" stroke-width="4"/></g>
+        <circle cx="120" cy="120" r="6" fill="#FFB020"/>
+        <text class="stamp-t" x="120" y="182" text-anchor="middle">3:30 → 3:45</text>
+      </svg>
+
+      <div>
+        <div class="band-head rise" style="margin-bottom:24px">
+          <p class="eyebrow">On the matter of time</p>
+          <h2 class="display">Fifteen minutes of grace. Not a minute more.</h2>
+        </div>
+        <dl class="facts rise">
+          <div class="fact">
+            <dt>Doors open</dt>
+            <dd><em>3:30 PM</em> — tea is already on</dd>
+          </div>
+          <div class="fact">
+            <dt>Be seated by</dt>
+            <dd><em>3:45 PM</em> — we start sharp</dd>
+          </div>
+          <div class="fact">
+            <dt>Arriving at 4</dt>
+            <dd>You will be the topic of conversation</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ VENUE + DRESS CODE ══════════════ -->
+<section class="band">
+  <div class="shell">
+    <div class="door-wrap">
+      <div>
+        <svg class="door" id="door" viewBox="0 0 160 250" role="button" tabindex="0" aria-label="Open the door to H-702">
+          <defs>
+            <linearGradient id="dg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#4C1858"/>
+              <stop offset="100%" stop-color="#2C0C34"/>
+            </linearGradient>
+            <radialGradient id="warm" cx="50%" cy="55%">
+              <stop offset="0%" stop-color="#FFB020" stop-opacity=".95"/>
+              <stop offset="100%" stop-color="#FF4B8C" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- frame + warm room behind -->
+          <rect x="16" y="34" width="128" height="206" fill="#150417"/>
+          <rect class="glow" x="16" y="34" width="128" height="206" fill="url(#warm)"/>
+          <rect x="16" y="34" width="128" height="206" fill="none" stroke="#5E2A6B" stroke-width="3"/>
+
+          <!-- the leaf -->
+          <g class="leaf">
+            <rect x="22" y="40" width="116" height="194" fill="url(#dg)" stroke="#5E2A6B"/>
+            <rect x="34" y="54" width="92" height="76" fill="none" stroke="#6E3A7B"/>
+            <rect x="34" y="146" width="92" height="76" fill="none" stroke="#6E3A7B"/>
+            <rect x="52" y="86" width="56" height="22" fill="#FFF4E6"/>
+            <text x="80" y="102" text-anchor="middle" font-size="13" fill="#3A1043" font-family="Futura,'Century Gothic',sans-serif" letter-spacing="1">H-702</text>
+            <circle cx="128" cy="140" r="4" fill="#FFB020"/>
+          </g>
+
+          <!-- toran / marigold garland -->
+          <g id="toran"></g>
+        </svg>
+        <p class="door-hint">Tap the door</p>
+      </div>
+
+      <div class="rise">
+        <p class="eyebrow">The address</p>
+        <p class="huge-addr">H-702</p>
+        <p class="prose" style="margin-top:0">Seventh floor, flat 702. Follow the marigolds and the noise — whichever reaches you first.</p>
+
+        <dl class="facts" style="margin-top:32px">
+          <div class="fact">
+            <dt>Dress code</dt>
+            <dd>There isn't one. <em>Wear whatever you like</em> — this is a free space.</dd>
+          </div>
+          <div class="fact">
+            <dt>Bring</dt>
+            <dd>An appetite, and something to gossip about</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ COUNTDOWN ══════════════ -->
+<section class="band band-alt">
+  <div class="shell">
+    <div class="band-head rise" style="text-align:center; justify-items:center">
+      <p class="eyebrow">Counting down to the first cup of chai</p>
+      <h2 class="display">See you in</h2>
+    </div>
+
+    <ul class="count rise" id="count">
+      <li><b class="num" id="d">--</b><small>Days</small></li>
+      <li><b class="num" id="h">--</b><small>Hours</small></li>
+      <li><b class="num" id="m">--</b><small>Minutes</small></li>
+      <li><b class="num" id="s">--</b><small>Seconds</small></li>
+    </ul>
+
+    <div class="cta-row rise" style="justify-content:center">
+      <a class="btn" id="ics" download="kitty-h702.ics" href="#">Add to calendar</a>
+      <button class="btn btn-ghost" type="button" id="celebrate">Throw some confetti</button>
+    </div>
+  </div>
+</section>
+
+<footer class="shell foot">
+  <span>H-702 · Thursday, 20 August 2026</span>
+  <span>3:30 PM sharp — well, 3:45 sharp</span>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (id) => document.getElementById(id);
+
+  /* ══════════ 1. envelope ══════════ */
+  const curtain = $("curtain"), env = $("env"), seal = $("seal");
+  document.body.classList.add("is-locked");
+
+  function openEnvelope(){
+    if (env.classList.contains("is-open")) return;
+    env.classList.add("is-open");
+    curtain.classList.add("is-open");
+    setTimeout(() => {
+      document.body.classList.remove("is-locked");
+      burst(innerWidth / 2, innerHeight * 0.42, 90);
+    }, reduce ? 60 : 900);
+  }
+  seal.addEventListener("click", openEnvelope);
+
+  /* ══════════ 2. rangoli (generated, 16-fold symmetry) ══════════ */
+  (function rangoli(){
+    const svg = $("rangoli");
+    const C = 400;
+    const rings = [
+      { n:16, r0:70,  r1:170, w:34, color:"#FF4B8C", op:.34 },
+      { n:24, r0:160, r1:258, w:26, color:"#FFB020", op:.26 },
+      { n:32, r0:250, r1:340, w:20, color:"#24C6B0", op:.20 },
+      { n:48, r0:330, r1:392, w:12, color:"#FF7A18", op:.16 }
+    ];
+    let out = "";
+    rings.forEach(ring => {
+      const step = 360 / ring.n;
+      for (let i = 0; i < ring.n; i++){
+        const a = i * step;
+        // one teardrop petal drawn straight up, then rotated into place
+        const d = `M ${C} ${C - ring.r0}
+                   C ${C + ring.w} ${C - ring.r0 - (ring.r1-ring.r0)*0.35},
+                     ${C + ring.w} ${C - ring.r1 + (ring.r1-ring.r0)*0.3},
+                     ${C} ${C - ring.r1}
+                   C ${C - ring.w} ${C - ring.r1 + (ring.r1-ring.r0)*0.3},
+                     ${C - ring.w} ${C - ring.r0 - (ring.r1-ring.r0)*0.35},
+                     ${C} ${C - ring.r0} Z`;
+        out += `<path d="${d}" fill="none" stroke="${ring.color}" stroke-width="1.1"
+                 opacity="${ring.op}" transform="rotate(${a} ${C} ${C})"/>`;
+      }
+      out += `<circle cx="${C}" cy="${C}" r="${ring.r0}" fill="none" stroke="${ring.color}" stroke-width=".7" opacity="${ring.op * 0.7}"/>`;
+    });
+    // dotted kolam grid at the centre
+    for (let i = 0; i < 8; i++){
+      const a = (i / 8) * Math.PI * 2;
+      out += `<circle cx="${C + Math.cos(a)*46}" cy="${C + Math.sin(a)*46}" r="2.6" fill="#FFB020" opacity=".5"/>`;
+    }
+    out += `<circle cx="${C}" cy="${C}" r="16" fill="none" stroke="#FF4B8C" stroke-width="1" opacity=".5"/>`;
+    svg.innerHTML = out;
+  })();
+
+  /* ══════════ 3. tambola ticket ══════════ */
+  const KEYS = {
+    8:  { label:"The month",        value:"August — the one you've been waiting for" },
+    20: { label:"The date",         value:"Thursday, the 20th" },
+    30: { label:"Doors open",       value:"3:30 PM — half past three" },
+    45: { label:"Punctuality",      value:"3:45 PM — quarter to four, and we begin" },
+    70: { label:"The address",      value:"H-702 — seventh floor" },
+    "star": { label:"Dress code",   value:"Free space. Wear absolutely whatever you like." }
+  };
+  const ORDER = ["8","20","30","45","star","70"];
+
+  // rows of [column, value]; null columns stay blank — a real 3×9 ticket, 15 numbers
+  const ROWS = [
+    [ null, null, null, null, null, null, null, null, null ],
+    [ null, null, null, null, null, null, null, null, null ],
+    [ null, null, null, null, null, null, null, null, null ]
+  ];
+  const fill = (r, pairs) => pairs.forEach(([c, v]) => { ROWS[r][c] = v; });
+  fill(0, [[0,"8"],  [2,"20"], [4,"45"], [5,"star"], [7,"70"]]);
+  fill(1, [[1,"15"], [3,"30"], [5,"52"], [6,"63"],   [8,"84"]]);
+  fill(2, [[0,"3"],  [2,"27"], [3,"38"], [6,"66"],   [8,"90"]]);
+
+  const grid = $("grid"), reveals = $("reveals"), placeholder = $("placeholder");
+  const bar = $("bar"), score = $("score"), fullhouse = $("fullhouse");
+  const daubed = new Set();
+
+  ROWS.forEach(row => row.forEach(v => {
+    if (v === null){
+      const b = document.createElement("div");
+      b.className = "cell blank";
+      grid.appendChild(b);
+      return;
+    }
+    const isKey = Object.prototype.hasOwnProperty.call(KEYS, v);
+    const el = document.createElement(isKey ? "button" : "div");
+    el.className = "cell" + (isKey ? " key" : "");
+    el.innerHTML = `<span>${v === "star" ? "★" : v}</span>`;
+    if (isKey){
+      el.type = "button";
+      el.setAttribute("aria-pressed", "false");
+      el.setAttribute("aria-label", `Daub ${v === "star" ? "the free space" : v} to reveal ${KEYS[v].label}`);
+      el.addEventListener("click", () => daub(v, el));
+    }
+    grid.appendChild(el);
+  }));
+
+  function daub(key, el){
+    if (daubed.has(key)) return;
+    daubed.add(key);
+    el.setAttribute("aria-pressed", "true");
+
+    if (placeholder.parentNode) placeholder.parentNode.removeChild(placeholder);
+
+    const card = document.createElement("div");
+    card.className = "reveal";
+    card.innerHTML =
+      `<div class="rn">${key === "star" ? "★" : key}</div>
+       <div><span class="rl">${KEYS[key].label}</span><span class="rv">${KEYS[key].value}</span></div>`;
+    // keep the cards in narrative order, not click order
+    const slot = ORDER.indexOf(key);
+    const after = [...reveals.children].find(c => Number(c.dataset.slot) > slot);
+    card.dataset.slot = slot;
+    reveals.insertBefore(card, after || null);
+    requestAnimationFrame(() => card.classList.add("on"));
+
+    const n = daubed.size;
+    bar.style.width = (n / 6 * 100) + "%";
+    score.textContent = `${n} of 6 daubed`;
+
+    const r = el.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, 16);
+
+    if (n === 6){
+      fullhouse.classList.add("on");
+      setTimeout(() => burst(innerWidth / 2, innerHeight * 0.6, 120), 180);
+    }
+  }
+
+  $("revealAll").addEventListener("click", () => {
+    [...grid.querySelectorAll(".cell.key")].forEach((el, i) => {
+      const v = el.textContent.trim() === "★" ? "star" : el.textContent.trim();
+      setTimeout(() => daub(v, el), reduce ? 0 : i * 130);
+    });
+  });
+
+  /* ══════════ 4. clock grace window ══════════ */
+  (function clock(){
+    const ticks = $("ticks");
+    let t = "";
+    for (let i = 0; i < 60; i++){
+      const a = (i / 60) * Math.PI * 2 - Math.PI / 2;
+      const hour = i % 5 === 0;
+      const r1 = hour ? 88 : 94, r2 = 100;
+      t += `<line class="tick${hour ? " tick-h" : ""}"
+              x1="${120 + Math.cos(a)*r1}" y1="${120 + Math.sin(a)*r1}"
+              x2="${120 + Math.cos(a)*r2}" y2="${120 + Math.sin(a)*r2}"/>`;
+    }
+    ticks.innerHTML = t;
+    const arc = $("graceArc");
+    const len = arc.getTotalLength();
+    arc.style.setProperty("--arc-len", len);
+  })();
+
+  /* ══════════ 5. toran (marigold garland over the door) ══════════ */
+  (function toran(){
+    const g = $("toran");
+    let s = `<path d="M 8 34 Q 80 62 152 34" fill="none" stroke="#24C6B0" stroke-width="2"/>`;
+    for (let i = 0; i <= 14; i++){
+      const p = i / 14;
+      const x = 8 + p * 144;
+      const y = 34 + Math.sin(p * Math.PI) * 20;
+      const drop = (i % 2 === 0) ? 9 : 15;
+      const col = (i % 3 === 0) ? "#FFB020" : (i % 3 === 1) ? "#FF7A18" : "#FF4B8C";
+      s += `<line x1="${x}" y1="${y}" x2="${x}" y2="${y + drop}" stroke="#24C6B0" stroke-width="1"/>`;
+      s += `<circle cx="${x}" cy="${y + drop + 4}" r="4.2" fill="${col}"/>`;
+      s += `<circle cx="${x}" cy="${y + drop + 4}" r="1.6" fill="#2C0C34" opacity=".35"/>`;
+    }
+    g.innerHTML = s;
+  })();
+
+  const door = $("door");
+  const toggleDoor = () => door.classList.toggle("open");
+  door.addEventListener("click", toggleDoor);
+  door.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " "){ e.preventDefault(); toggleDoor(); }
+  });
+
+  /* ══════════ 6. countdown ══════════ */
+  const TARGET = new Date(2026, 7, 20, 15, 30, 0); // 20 Aug 2026, 3:30 PM local
+  const pad = (n) => String(n).padStart(2, "0");
+  function tick(){
+    let ms = TARGET - new Date();
+    if (ms <= 0){
+      $("d").textContent = $("h").textContent = $("m").textContent = $("s").textContent = "00";
+      document.querySelector("#count").previousElementSibling.querySelector("h2").textContent = "It's kitty time.";
+      return;
+    }
+    const sec = Math.floor(ms / 1000);
+    $("d").textContent = pad(Math.floor(sec / 86400));
+    $("h").textContent = pad(Math.floor(sec / 3600) % 24);
+    $("m").textContent = pad(Math.floor(sec / 60) % 60);
+    $("s").textContent = pad(sec % 60);
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ══════════ 7. add to calendar ══════════ */
+  (function ics(){
+    const body = [
+      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//H-702//Kitty//EN","CALSCALE:GREGORIAN",
+      "BEGIN:VEVENT","UID:kitty-h702-20260820@h702.invite","DTSTAMP:20260809T000000Z",
+      "DTSTART:20260820T153000","DTEND:20260820T183000",
+      "SUMMARY:Kitty Party at H-702","LOCATION:H-702",
+      "DESCRIPTION:Doors open 3:30 PM. Be seated by 3:45 PM sharp. Dress code: wear whatever you like.",
+      "BEGIN:VALARM","TRIGGER:-PT60M","ACTION:DISPLAY","DESCRIPTION:Kitty at H-702 in an hour","END:VALARM",
+      "END:VEVENT","END:VCALENDAR"
+    ].join("\r\n");
+    $("ics").href = "data:text/calendar;charset=utf-8," + encodeURIComponent(body);
+  })();
+
+  /* ══════════ 8. petals + confetti on one canvas ══════════ */
+  const cv = $("petals"), ctx = cv.getContext("2d");
+  const PALETTE = ["#FFB020","#FF7A18","#FF4B8C","#24C6B0","#FFF4E6"];
+  let W = 0, H = 0, dpr = 1;
+  const petals = [], sparks = [];
+
+  function size(){
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = cv.width = innerWidth * dpr;
+    H = cv.height = innerHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size();
+  addEventListener("resize", size);
+
+  const rnd = (a, b) => a + Math.random() * (b - a);
+
+  function seedPetals(){
+    const n = Math.round(Math.min(46, innerWidth / 26));
+    for (let i = 0; i < n; i++){
+      petals.push({
+        x: rnd(0, innerWidth), y: rnd(-innerHeight, innerHeight),
+        r: rnd(3.5, 8), vy: rnd(.22, .75), vx: rnd(-.28, .28),
+        a: rnd(0, 6.28), va: rnd(-.012, .012),
+        c: PALETTE[(Math.random() * 3) | 0], o: rnd(.25, .6)
+      });
+    }
+  }
+  seedPetals();
+
+  function burst(x, y, n){
+    if (reduce) return;
+    for (let i = 0; i < n; i++){
+      const a = Math.random() * Math.PI * 2, sp = rnd(2.5, 11);
+      sparks.push({
+        x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 3,
+        w: rnd(3, 8), h: rnd(5, 12), a: Math.random() * 6.28, va: rnd(-.24, .24),
+        c: PALETTE[(Math.random() * PALETTE.length) | 0], life: 1
+      });
+    }
+  }
+  $("celebrate").addEventListener("click", (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top, 140);
+  });
+
+  function petalPath(p){
+    ctx.beginPath();
+    ctx.ellipse(0, 0, p.r, p.r * 0.52, 0, 0, 6.283);
+    ctx.fill();
+  }
+
+  function frame(){
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    for (const p of petals){
+      p.y += p.vy; p.x += p.vx + Math.sin(p.y * 0.01) * 0.3; p.a += p.va;
+      if (p.y - p.r > innerHeight){ p.y = -12; p.x = rnd(0, innerWidth); }
+      if (p.x < -20) p.x = innerWidth + 10;
+      if (p.x > innerWidth + 20) p.x = -10;
+      ctx.save();
+      ctx.translate(p.x, p.y); ctx.rotate(p.a);
+      ctx.globalAlpha = p.o; ctx.fillStyle = p.c;
+      petalPath(p);
+      ctx.restore();
+    }
+
+    for (let i = sparks.length - 1; i >= 0; i--){
+      const s = sparks[i];
+      s.vy += 0.28; s.vx *= 0.992;
+      s.x += s.vx; s.y += s.vy; s.a += s.va; s.life -= 0.008;
+      if (s.life <= 0 || s.y > innerHeight + 40){ sparks.splice(i, 1); continue; }
+      ctx.save();
+      ctx.translate(s.x, s.y); ctx.rotate(s.a);
+      ctx.globalAlpha = Math.max(0, s.life);
+      ctx.fillStyle = s.c;
+      ctx.fillRect(-s.w / 2, -s.h / 2, s.w, s.h);
+      ctx.restore();
+    }
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+
+  if (reduce){
+    // static scatter — no motion, still decorated
+    for (const p of petals){
+      ctx.save(); ctx.translate(p.x, Math.abs(p.y) % innerHeight); ctx.rotate(p.a);
+      ctx.globalAlpha = p.o * 0.7; ctx.fillStyle = p.c; petalPath(p); ctx.restore();
+    }
+  } else {
+    frame();
+  }
+
+  /* ══════════ 9. scroll reveals + clock trigger ══════════ */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in");
+      if (e.target.id === "clock") e.target.classList.add("run");
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.18 });
+  document.querySelectorAll(".rise").forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
+</html>
